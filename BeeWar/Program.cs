@@ -22,9 +22,9 @@ namespace BeeWar
             Console.WriteLine($"\nПчеловод: {beekeeper.Name}");
             Console.WriteLine($"Пасека:   {apiary.Name}");
 
-            apiary.AddHive(factory.CreateFullHive("H1", workers: 6, cells: 800));
-            apiary.AddHive(factory.CreateFullHive("H2", workers: 5, cells: 800));
-            apiary.AddHive(factory.CreateFullHive("H3", workers: 4, cells: 600));
+            apiary.AddHive(factory.CreateFullHive("H1", workers: 12, cells: 480));
+            apiary.AddHive(factory.CreateFullHive("H2", workers: 16, cells: 640));
+            apiary.AddHive(factory.CreateFullHive("H3", workers: 14, cells: 640));
 
             Console.WriteLine($"\nСоздано ульев: {apiary.Hives.Count}, пчёл: {apiary.TotalBees()}");
             foreach (var h in apiary.Hives) Console.WriteLine("  " + h.Status());
@@ -33,12 +33,12 @@ namespace BeeWar
             foreach (var bee in apiary.Hives[0].Bees)
                 Console.WriteLine("  " + bee.DoWork());
 
-            Console.WriteLine("\n--- Инкапсуляция: setter ограничивает значения ---");
+            Console.WriteLine("\n--- Инкапсуляция: сеттер ограничивает значения ---");
             var testSub = new Substance("Тест", percent: 500, usefulness: 5);
-            Console.WriteLine($"  Substance(percent=500, usefulness=5) -> {testSub}");
+            Console.WriteLine($"  Вещество(процент=500, полезность=5) -> {testSub}");
             var testBee = new WorkerBee("Контроль");
-            testBee.Health = -10; Console.WriteLine($"  Health = -10 -> {testBee.Health}");
-            testBee.Health = 99999; Console.WriteLine($"  Health = 99999 -> {testBee.Health}");
+            testBee.Health = -10; Console.WriteLine($"  Здоровье = -10 -> {testBee.Health}");
+            testBee.Health = 99999; Console.WriteLine($"  Здоровье = 99999 -> {testBee.Health}");
 
             var sim = new Simulation(apiary, beekeeper);
             sim.RunSeason(14);
