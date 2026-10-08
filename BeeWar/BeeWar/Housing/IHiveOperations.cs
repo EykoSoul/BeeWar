@@ -3,7 +3,7 @@ using BeeWar.Products;
 
 namespace BeeWar.Housing
 {
-    //  Контракт операций над ульем. 
+    /// <summary>Контракт операций над ульем.</summary>
     public interface IHiveOperations
     {
         void AddBee(Bee bee);

@@ -2,13 +2,11 @@
 
 namespace BeeWar.Bees
 {
-    //  Матка — откладывает яйца, из которых появляются новые пчёлы. 
+    /// <summary>Матка — откладывает яйца.</summary>
     public class Queen : Bee
     {
         public int EggsPerDay { get; set; }
         public int EggsLaid { get; private set; }
-
-        //  Яйца, готовые к превращению в пчёл. 
         public int PendingEggs { get; private set; }
 
         public Queen(string name, int eggsPerDay = 1500, int ageDays = 0, int health = 100)
@@ -18,7 +16,6 @@ namespace BeeWar.Bees
             MaxAge = 150;
         }
 
-        //  Матка тратит меньше энергии, чем рабочие. 
         public override void AgeOneDay()
         {
             AgeDays++;
@@ -39,7 +36,6 @@ namespace BeeWar.Bees
             return $"Матка '{Name}' отложила {EggsPerDay} яиц (всего {EggsLaid}, в ожидании: {PendingEggs}).";
         }
 
-        //  Взять из «очереди» яиц несколько штук для превращения в пчёл. 
         public int TakeEggs(int count)
         {
             int taken = Math.Min(count, PendingEggs);

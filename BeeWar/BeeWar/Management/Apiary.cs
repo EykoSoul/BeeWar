@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BeeWar.Collections;
 using BeeWar.Housing;
 
 namespace BeeWar.Management
 {
-    //  Пасека — набор ульев. 
+    /// <summary>Пасека — набор ульев. Использует BeeCollection&lt;Hive&gt;.</summary>
     public class Apiary
     {
-        private readonly List<Hive> _hives = new();
+        private readonly BeeCollection<Hive> _hives = new();
 
         public string Name { get; }
-        public IReadOnlyList<Hive> Hives => _hives;
+        public IEnumerable<Hive> Hives => _hives;
 
         public Apiary(string name) { Name = name; }
 

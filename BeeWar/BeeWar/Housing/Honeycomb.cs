@@ -2,7 +2,7 @@
 
 namespace BeeWar.Housing
 {
-    // Соты — восковая структура с ячейками. Хранят нектар и мёд.
+    /// <summary>Соты — хранят нектар и мёд.</summary>
     public class Honeycomb
     {
         private int _cells;

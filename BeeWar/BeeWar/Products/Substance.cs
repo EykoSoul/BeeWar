@@ -2,7 +2,7 @@
 
 namespace BeeWar.Products
 {
-    // Вещество — компонент мёда. Демонстрирует getters/setters и инкапсуляцию
+    /// <summary>Вещество — компонент мёда.</summary>
     public class Substance
     {
         private string _name = "—";
@@ -15,14 +15,12 @@ namespace BeeWar.Products
             set => _name = string.IsNullOrWhiteSpace(value) ? "—" : value;
         }
 
-        //  Массовая доля в % (0..100). 
         public double Percent
         {
             get => _percent;
             set => _percent = Math.Clamp(value, 0, 100);
         }
 
-        //  Полезность компонента 0..1. 
         public double Usefulness
         {
             get => _usefulness;

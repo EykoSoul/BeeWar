@@ -3,14 +3,13 @@ using BeeWar.Housing;
 
 namespace BeeWar.Management
 {
-    // Абстрактная фабрика создания пчёл. Паттерн Abstract Factory
+    /// <summary>Абстрактная фабрика создания пчёл.</summary>
     public abstract class BeeFactory
     {
         public abstract Queen CreateQueen(string name);
         public abstract WorkerBee CreateWorker(string name);
         public abstract Drone CreateDrone(string name);
 
-        //  Создать полноценную семью для улья. 
         public Hive CreateFullHive(string hiveId, int workers = 5, int drones = 2, int cells = 1000)
         {
             var hive = new Hive(hiveId, cells);
@@ -21,7 +20,6 @@ namespace BeeWar.Management
         }
     }
 
-    //  Стандартная фабрика — обычные пчёлы. 
     public class StandardBeeFactory : BeeFactory
     {
         public override Queen CreateQueen(string name) => new Queen(name);
