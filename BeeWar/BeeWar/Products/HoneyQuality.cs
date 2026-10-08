@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BeeWar.Products
 {
-    //  Анализ и смешивание партий мёда. 
+    /// <summary>Анализ и смешивание партий мёда.</summary>
     public static class HoneyQuality
     {
         public static void PrintReport(Honey honey)

@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using BeeWar.Bees;
+using BeeWar.Collections;
 using BeeWar.Products;
 
 namespace BeeWar.Housing
 {
-    // Улей: содержит пчёл и соты, моделирует день жизни улья
-    // Количество пчёл может расти (размножение) и падать (гибель)
+    /// <summary>
+    /// Улей: содержит пчёл и соты, моделирует день жизни улья.
+    /// Использует собственную обобщённую коллекцию BeeCollection&lt;Bee&gt;.
+    /// </summary>
     public class Hive : IHiveOperations
     {
-        private readonly List<Bee> _bees = new();
+        private readonly BeeCollection<Bee> _bees = new();
         private Honey? _honeyInside;
         private readonly Random _random = new();
 
         public string Id { get; }
         public Honeycomb Comb { get; }
         public int BeeCount => _bees.Count;
-        public IReadOnlyList<Bee> Bees => _bees;
+        public IEnumerable<Bee> Bees => _bees;
 
         public int TotalDeaths { get; private set; }
         public int TotalBirths { get; private set; }
@@ -55,10 +58,8 @@ namespace BeeWar.Housing
 
         // ==================== Симуляция ====================
 
-        //  Один день жизни улья. 
         public void SimulateDay(Action<string>? log = null)
         {
-            // 1. Работают все живые
             foreach (var bee in _bees.Where(b => b.IsAlive).ToList())
             {
                 if (bee is WorkerBee wb)
@@ -75,25 +76,19 @@ namespace BeeWar.Housing
                 bee.AgeOneDay();
             }
 
-            // 2. Убираем мёртвых
             int removed = _bees.RemoveAll(b => !b.IsAlive);
             if (removed > 0)
             {
                 TotalDeaths += removed;
-                log?.Invoke($"  [{Id}] Погибло пчёл: {removed}. Осталось: {_bees.Count}");
+                log?.Invoke($"  [{Id}] [ГИБЕЛЬ] Погибло пчёл: {removed}. Осталось: {_bees.Count}");
             }
 
-            // 3. Замена погибшей матки
             ReplaceDeadQueen(log);
-
-            // 4. Размножение
             BreedNewBees(log);
         }
 
         // ==================== Приватные методы ====================
 
-        // Если матка погибла, но в улье достаточно рабочих —
-        // выводим новую матку
         private void ReplaceDeadQueen(Action<string>? log)
         {
             var aliveQueen = _bees.OfType<Queen>().FirstOrDefault(q => q.IsAlive);
@@ -105,12 +100,9 @@ namespace BeeWar.Housing
             var newQueen = new Queen($"Матка-{Id}-новая", eggsPerDay: 1200);
             _bees.Add(newQueen);
             TotalBirths++;
-            log?.Invoke($"  [{Id}] Выведена новая матка: {newQueen.Name}");
+            log?.Invoke($"  [{Id}] [МАТКА] Выведена новая матка: {newQueen.Name}");
         }
 
-        // Размножение: если матка жива, из накопленных яиц появляются новые пчёлы.
-        // Скорость ФИКСИРОВАННАЯ, не зависит от текущей популяции —
-        // это защищает от экспоненциального взрыва
         private void BreedNewBees(Action<string>? log)
         {
             var queen = _bees.OfType<Queen>().FirstOrDefault();
@@ -120,21 +112,17 @@ namespace BeeWar.Housing
                 return;
             }
 
-            // Базовая рождаемость — фиксированная
             int baseHatch = 2;
             if (queen.Health < 50) baseHatch = 1;
             if (queen.Health < 20) baseHatch = 0;
 
-            // Случайность только в плюс: 0 или +1
             int eggsToHatch = baseHatch + _random.Next(0, 2);
-
-            // Верхняя граница
             eggsToHatch = Math.Min(eggsToHatch, 4);
 
             int available = queen.PendingEggs;
             int hatched = queen.TakeEggs(eggsToHatch);
 
-            log?.Invoke($"  [{Id}] В наличии: {available}, попытка: {eggsToHatch}, вылупилось: {hatched}");
+            log?.Invoke($"  [{Id}] [ЯЙЦА] В наличии: {available}, попытка: {eggsToHatch}, вылупилось: {hatched}");
 
             if (hatched == 0) return;
 
@@ -142,7 +130,6 @@ namespace BeeWar.Housing
             {
                 double r = _random.NextDouble();
                 Bee newBee;
-
                 bool hasOtherQueen = _bees.OfType<Queen>().Any(q => q.IsAlive && q != queen);
 
                 if (r < 0.05 && !hasOtherQueen)
@@ -156,7 +143,7 @@ namespace BeeWar.Housing
                 TotalBirths++;
             }
 
-            log?.Invoke($"  [{Id}] Родилось: {hatched}. Всего пчёл: {_bees.Count}");
+            log?.Invoke($"  [{Id}] [РОЖДЕНИЕ] Родилось: {hatched}. Всего пчёл: {_bees.Count}");
         }
 
         // ==================== Прочее ====================
@@ -170,6 +157,16 @@ namespace BeeWar.Housing
             return $"Улей {Id}: всего пчёл {BeeCount} " +
                    $"(матка: {(q?.Name ?? "нет")}, рабочих: {workers}, трутней: {drones}) | " +
                    $"родилось: {TotalBirths}, погибло: {TotalDeaths} | {Comb}";
+        }
+
+        /// <summary>Клонирование улья — демонстрация ICloneable в коллекции.</summary>
+        public Hive CloneHive(string newId)
+        {
+            var copy = new Hive(newId, Comb.Cells);
+            var beesCopy = _bees.DeepClone();
+            foreach (var b in beesCopy)
+                copy.AddBee(b);
+            return copy;
         }
     }
 }

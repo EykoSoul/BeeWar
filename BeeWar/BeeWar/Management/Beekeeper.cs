@@ -3,7 +3,7 @@ using BeeWar.Products;
 
 namespace BeeWar.Management
 {
-    //  Пчеловод — управляет пасекой и производит мёд. 
+    /// <summary>Пчеловод — управляет пасекой и производит мёд.</summary>
     public class Beekeeper
     {
         public string Name { get; set; }

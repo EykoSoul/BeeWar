@@ -1,6 +1,6 @@
 ﻿namespace BeeWar.Bees
 {
-    //  Трутень — участвует в размножении. 
+    /// <summary>Трутень — участвует в размножении.</summary>
     public class Drone : Bee
     {
         public bool IsFertile { get; set; } = true;

@@ -2,8 +2,9 @@
 
 namespace BeeWar.Bees
 {
-    // Абстрактная пчела. Демонстрирует наследование и полиморфизм
-    // Инкапсуляция: приватные поля + свойства с контролем значений
+    /// <summary>
+    /// Абстрактная пчела. Демонстрирует наследование и полиморфизм.
+    /// </summary>
     public abstract class Bee
     {
         private string _name = "Безымянная";
@@ -29,10 +30,7 @@ namespace BeeWar.Bees
         }
 
         public int AgeDays { get; protected set; }
-
-        //  Максимальный возраст пчелы (дней). 
         public int MaxAge { get; protected set; } = 60;
-
         public bool IsAlive => Health > 0 && AgeDays < MaxAge;
 
         protected Bee(string name, int ageDays = 0, int health = 100)
@@ -44,7 +42,6 @@ namespace BeeWar.Bees
 
         public abstract string DoWork();
 
-        //  Общее поведение: старение за день. 
         public virtual void AgeOneDay()
         {
             AgeDays++;

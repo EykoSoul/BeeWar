@@ -4,7 +4,7 @@ using BeeWar.Products;
 
 namespace BeeWar.Management
 {
-    //  Симуляция сезона пчеловодства. 
+    /// <summary>Симуляция сезона пчеловодства.</summary>
     public class Simulation
     {
         public Apiary Apiary { get; }
@@ -32,12 +32,12 @@ namespace BeeWar.Management
                 {
                     if (verbose)
                     {
-                        // Полный лог каждого действия
-                        hive.SimulateDay(Console.WriteLine);
+                        // Лямбда вместо группы методов Console.WriteLine
+                        hive.SimulateDay(msg => Console.WriteLine(msg));
                     }
                     else
                     {
-                        // Краткий лог: только важные события (рождение/смерть/замена матки)
+                        // Краткий лог: только важные события
                         hive.SimulateDay(msg =>
                         {
                             if (msg.Contains("[РОЖДЕНИЕ]") ||
