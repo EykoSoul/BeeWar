@@ -1,0 +1,16 @@
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\BeeWar.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\BeeWar.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\BeeWar.AssemblyInfo.cs
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\BeeWar.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\BeeWar\BeeWar\bin\Debug\net10.0\BeeWar.exe
+C:\Users\User\source\repos\BeeWar\BeeWar\bin\Debug\net10.0\BeeWar.deps.json
+C:\Users\User\source\repos\BeeWar\BeeWar\bin\Debug\net10.0\BeeWar.runtimeconfig.json
+C:\Users\User\source\repos\BeeWar\BeeWar\bin\Debug\net10.0\BeeWar.dll
+C:\Users\User\source\repos\BeeWar\BeeWar\bin\Debug\net10.0\BeeWar.pdb
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\BeeWar.dll
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\refint\BeeWar.dll
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\BeeWar.pdb
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\BeeWar.genruntimeconfig.cache
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\ref\BeeWar.dll
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\BeeWar.csproj.Up2Date
+C:\Users\User\source\repos\BeeWar\BeeWar\obj\Debug\net10.0\BeeWar.sourcelink.json
