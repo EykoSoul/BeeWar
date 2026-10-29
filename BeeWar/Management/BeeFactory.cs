@@ -3,6 +3,7 @@ using BeeWar.Housing;
 
 namespace BeeWar.Management
 {
+    /// <summary>Абстрактная фабрика создания пчёл.</summary>
     public abstract class BeeFactory
     {
         public abstract Queen CreateQueen(string name);
@@ -24,12 +25,5 @@ namespace BeeWar.Management
         public override Queen CreateQueen(string name) => new Queen(name);
         public override WorkerBee CreateWorker(string name) => new WorkerBee(name);
         public override Drone CreateDrone(string name) => new Drone(name);
-    }
-
-    public class EliteBeeFactory : BeeFactory
-    {
-        public override Queen CreateQueen(string name) => new Queen(name, eggsPerDay: 2500);
-        public override WorkerBee CreateWorker(string name) => new WorkerBee(name, health: 100);
-        public override Drone CreateDrone(string name) => new Drone(name, health: 100);
     }
 }

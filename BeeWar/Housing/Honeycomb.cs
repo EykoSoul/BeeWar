@@ -2,6 +2,7 @@
 
 namespace BeeWar.Housing
 {
+    /// <summary>Соты — хранят нектар и мёд.</summary>
     public class Honeycomb
     {
         private int _cells;
@@ -20,7 +21,6 @@ namespace BeeWar.Housing
         }
 
         public double CapacityKg => Cells * 0.005;
-
         public bool IsFull => FilledKg >= CapacityKg - 1e-9;
         public double FillPercent => CapacityKg <= 0 ? 0 : FilledKg / CapacityKg * 100;
 

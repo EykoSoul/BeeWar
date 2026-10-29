@@ -2,6 +2,9 @@
 
 namespace BeeWar.Bees
 {
+    /// <summary>
+    /// Абстрактная пчела. Демонстрирует наследование и полиморфизм.
+    /// </summary>
     public abstract class Bee
     {
         private string _name = "Безымянная";
@@ -27,7 +30,8 @@ namespace BeeWar.Bees
         }
 
         public int AgeDays { get; protected set; }
-        public bool IsAlive => Health > 0;
+        public int MaxAge { get; protected set; } = 60;
+        public bool IsAlive => Health > 0 && AgeDays < MaxAge;
 
         protected Bee(string name, int ageDays = 0, int health = 100)
         {
@@ -41,12 +45,13 @@ namespace BeeWar.Bees
         public virtual void AgeOneDay()
         {
             AgeDays++;
-            Energy = Energy - 2;
-            if (Energy < 20) Health -= 1;
+            Energy = Math.Max(0, Energy - 2);
+            if (Energy < 10) Health -= 1;
+            if (AgeDays >= MaxAge) Health = 0;
         }
 
         public virtual string GetInfo()
-            => $"{GetType().Name} '{Name}' | возраст {AgeDays} дн. | HP {Health}% | энергия {Energy:F0}%";
+            => $"{GetType().Name} '{Name}' | возраст {AgeDays}/{MaxAge} дн. | HP {Health}% | энергия {Energy:F0}%";
 
         public override string ToString() => GetInfo();
     }

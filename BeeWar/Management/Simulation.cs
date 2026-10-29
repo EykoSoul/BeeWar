@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using BeeWar.Products;
 
 namespace BeeWar.Management
 {
+    /// <summary>Симуляция сезона пчеловодства.</summary>
     public class Simulation
     {
         public Apiary Apiary { get; }
@@ -18,16 +20,47 @@ namespace BeeWar.Management
         public void RunSeason(int days, bool verbose = false)
         {
             Console.WriteLine($"\n=== Симуляция сезона: {days} дней ===");
+
             for (int d = 1; d <= days; d++)
             {
                 Day++;
+
                 if (verbose)
                     Console.WriteLine($"\n--- День {Day} ---");
 
                 foreach (var hive in Apiary.Hives)
-                    hive.SimulateDay(verbose ? Console.WriteLine : (Action<string>?)null);
+                {
+                    if (verbose)
+                    {
+                        // Лямбда вместо группы методов Console.WriteLine
+                        hive.SimulateDay(msg => Console.WriteLine(msg));
+                    }
+                    else
+                    {
+                        // Краткий лог: только важные события
+                        hive.SimulateDay(msg =>
+                        {
+                            if (msg.Contains("[РОЖДЕНИЕ]") ||
+                                msg.Contains("[ГИБЕЛЬ]") ||
+                                msg.Contains("[МАТКА]") ||
+                                msg.Contains("[ВНИМАНИЕ]"))
+                            {
+                                Console.WriteLine(msg);
+                            }
+                        });
+                    }
+                }
+
+                if (Day % 5 == 0)
+                {
+                    Console.WriteLine($"\n[День {Day}] Популяция:");
+                    foreach (var h in Apiary.Hives)
+                        Console.WriteLine($"  {h.Id}: пчёл {h.BeeCount}, " +
+                                          $"родилось {h.TotalBirths}, погибло {h.TotalDeaths}");
+                }
             }
-            Console.WriteLine("=== Сезон завершён ===");
+
+            Console.WriteLine("\n=== Сезон завершён ===");
         }
 
         public Honey FinishAndProduce(string sort)

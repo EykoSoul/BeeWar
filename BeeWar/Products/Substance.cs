@@ -2,6 +2,7 @@
 
 namespace BeeWar.Products
 {
+    /// <summary>Вещество — компонент мёда.</summary>
     public class Substance
     {
         private string _name = "—";

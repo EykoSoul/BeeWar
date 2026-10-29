@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace BeeWar.Products
 {
+    /// <summary>Мёд — продукт, состоящий из веществ.</summary>
     public class Honey
     {
         private readonly List<Substance> _composition = new();
